@@ -1,0 +1,24 @@
+{
+  "language": "python",
+  "build_cmd": "pip install --no-cache-dir -r requirements.txt",
+  "start_cmd": "flask --app app run --host 0.0.0.0 --port 5000",
+  "port": 5000,
+  "health_url": "/health",
+  "source": "user",
+  "exploit_hints": [
+    { "route": "/search", "method": "GET", "params": ["q"], "path": "app.py", "lines": [27, 32] },
+    { "route": "/orders", "method": "GET", "params": ["status"], "path": "app.py", "lines": [44, 49] },
+    { "route": "/products", "method": "GET", "params": ["category"], "path": "catalog.py", "lines": [9, 14] }
+  ],
+  "snapshot_requests": [
+    { "name": "health", "method": "GET", "path": "/health" },
+    { "name": "search-lower", "method": "GET", "path": "/search", "query": {"q": "ali"} },
+    { "name": "search-upper-case", "method": "GET", "path": "/search", "query": {"q": "ALI"} },
+    { "name": "lookup-alice", "method": "GET", "path": "/users/lookup", "query": {"email": "alice@example.test"} },
+    { "name": "lookup-missing", "method": "GET", "path": "/users/lookup", "query": {"email": "nobody@example.test"} },
+    { "name": "orders-open", "method": "GET", "path": "/orders", "query": {"status": "open"} },
+    { "name": "orders-shipped", "method": "GET", "path": "/orders", "query": {"status": "shipped"} },
+    { "name": "products-office", "method": "GET", "path": "/products", "query": {"category": "office"} },
+    { "name": "products-kitchen", "method": "GET", "path": "/products", "query": {"category": "kitchen"} }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "vulcan-benchmark-handwritten",
+          "version": "1.0.0",
+          "informationUri": "https://cwe.mitre.org/data/definitions/89.html",
+          "rules": [
+            {
+              "id": "py/sql-injection",
+              "name": "SqlInjection",
+              "shortDescription": {
+                "text": "SQL query built from user-controlled sources"
+              },
+              "fullDescription": {
+                "text": "Building a SQL query from user-controlled input without parameters lets an attacker change the query."
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "helpUri": "https://cwe.mitre.org/data/definitions/89.html",
+              "properties": {
+                "tags": [
+                  "security",
+                  "external/cwe/cwe-89"
+                ],
+                "cwe": [
+                  "CWE-89"
+                ],
+                "precision": "high",
+                "security-severity": "8.8"
+              }
+            }
+          ]
+        }
+      },
+      "originalUriBaseIds": {
+        "%SRCROOT%": {
+          "description": {
+            "text": "Root of the flask-sqli-multi benchmark repository"
+          }
+        }
+      },
+      "results": [
+        {
+          "ruleId": "py/sql-injection",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "This SQL query depends on the user-provided query parameter 'category'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "catalog.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 12,
+                  "endLine": 13,
+                  "snippet": {
+                    "text": "    sql = f\"SELECT id, name FROM products WHERE category = '{category}' ORDER BY id\"\n    rows = get_db().execute(sql).fetchall()\n"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "py/sql-injection",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "This SQL query depends on the user-provided query parameter 'status'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 47,
+                  "endLine": 48,
+                  "snippet": {
+                    "text": "        sql = f\"SELECT id, item FROM orders WHERE status = '{status}' ORDER BY id\"\n        rows = get_db().execute(sql).fetchall()\n"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "py/sql-injection",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "This SQL query depends on the user-provided query parameter 'q'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 30,
+                  "endLine": 31,
+                  "snippet": {
+                    "text": "        sql = f\"SELECT id, username FROM users WHERE username LIKE '%{term}%' ORDER BY id\"\n        rows = get_db().execute(sql).fetchall()\n"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
